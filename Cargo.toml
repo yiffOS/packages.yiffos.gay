@@ -6,3 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+dotenv = "0.15.0"
+
+actix-web = "4.0.1"
+
+askama = "0.11.1"
+askama_actix = "0.13.0"
+
+diesel = { version = "1.4.8", features = ["postgres"] }
