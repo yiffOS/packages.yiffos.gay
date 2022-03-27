@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>yiffOS Packages</title>
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+    <body>
+        <header class="container" style="padding-bottom: 0em;">
+            <nav>
+                <ul>
+                    <li><h1>yiffOS Packages</h1></li>
+                </ul>
+                <ul>
+                    <li><input type="search" id="search" name="search" placeholder="Search"></li>
+                </ul>
+              </nav>
+        </header>
+        <main class="container" style="padding-top: 0em; flex: 1;">
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Version</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for package in packages %}
+                        <tr>
+                            <th scope="row"><a href="./{{ package.name }}">{{ package.name }}</a></th>
+                            <td>{{ package.version }}</td>
+                            <td>{{ package.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+        <footer class="container">
+            {% let packages_amount = packages.len() %}
+            <hr />
+            <p>
+                Hosting 
+                <span>{{ packages_amount }}</span> 
+                package{% if packages_amount != 1 %}s{% endif %}
+            </p>
+        </footer>
+    </body>
+    <script src="./js/main.js"></script>
+</html>

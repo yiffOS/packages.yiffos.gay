@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <title>yiffOS Packages - {{ package.name }}</title>
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+    <body>
+        <header class="container" style="padding-bottom: 0em;">
+            <nav>
+                <ul>
+                    <li><h1>yiffOS Packages</h1></li>
+                </ul>
+              </nav>
+        </header>
+        <main class="container" style="padding-top: 0em; flex: 1;">
+            <hgroup>
+                <h2 style="margin-bottom: 0%;">{{ package.name }}</h2>
+                <strong>{{ package.version }} — {{ package.epoch }}</strong>
+            </hgroup>
+
+            <hr />
+
+            <p><strong>{{ package.description }}</strong></p>
+
+            <ul>
+                <li><strong>License:</strong> 
+                    {% for license in package.licenses %}
+                        {% if loop.last %}
+                            {{ license }}
+                        {% else if loop.first %}
+                            {{ license }}, 
+                        {% else %}
+                            {{ license }}, 
+                        {% endif %}
+                    {% endfor %}
+                </li>
+                <li><strong>Homepage:</strong> <a href="{{ package.url }}">{{ package.url }}</a></li>
+            </ul>
+
+            <strong>Groups</strong>
+            <ul>
+                {% for group in package.groups %}
+                    <li>{{ group }}</li>
+                {% endfor %}
+
+                {% if package.groups.len() == 0 %}
+                    <li>None</li>
+                {% endif %}
+            </ul>
+
+            <div class="grid">
+                <div>
+                    <strong>Dependencies</strong>
+                    <ul>
+                        {% for dependency in package.dependencies %}
+                            <li><a href="./{{ dependency }}">{{ dependency }}</a></li>
+                        {% endfor %}
+
+                        {% if package.dependencies.len() == 0 %}
+                            <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div>
+                    <strong>Required By</strong>
+                    <ul>
+                        {% for required_by in package.required_by %}
+                            <li><a href="./{{ required_by }}">{{ required_by }}</a></li>
+                        {% endfor %}
+
+                        {% if package.required_by.len() == 0 %}
+                            <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="grid">
+                <div>
+                    <strong>Optional Dependencies</strong>
+                    <ul>
+                        {% for optional_dependency in package.optional_dependencies %}
+                            <li><a href="./{{ optional_dependency }}">{{ optional_dependency }}</a></li>
+                        {% endfor %}
+
+                        {% if package.optional_dependencies.len() == 0 %}
+                            <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div>
+                    <strong>Build Dependencies</strong>
+                    <ul>
+                        {% for build_dependency in package.build_dependencies %}
+                            <li><a href="./{{ build_dependency }}">{{ build_dependency }}</a></li>
+                        {% endfor %}
+
+                        {% if package.build_dependencies.len() == 0 %}
+                            <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <strong>Provides</strong>
+            <ul>
+                {% for provides in package.provides %}
+                    <li>{{ provides }}</li>
+                {% endfor %}
+
+                {% if package.provides.len() == 0 %}
+                    <li>None</li>
+                {% endif %}
+            </ul>
+
+            <strong>Maintainers</strong>
+            <ul>
+                {% for maintainer in package.maintainers %}
+                    <li>{{ maintainer }}</li>
+                {% endfor %}
+
+                {% if package.maintainers.len() == 0 %}
+                    <li>None</li>
+                {% endif %}
+            </ul>
+
+            <hr />
+
+            <div class="grid">
+                <div>
+                    <a href="https://mirror.yiffos.gay/core/x86_64/knot/{{ package.name }}-{{ package.version }}-{{ package.epoch }}.tar.xz" role="button" class="primary">Download</a>
+                    <a href="https://gitlab.com/yiffos/packaging/packages/-/tree/main/{{ package.name }}" role="button" class="secondary">Source Files</a>
+                    <a href="https://yiffos.atlassian.net/jira/software/c/projects/PAC/issues" role="button" class="contrast">Report Issue</a>
+                </div>
+            </div>
+        </main>
+        <footer class="container">
+            {% let packages_amount = packages.len() %}
+            <hr />
+            <p>
+                Hosting 
+                <span>{{ packages_amount }}</span> 
+                package{% if packages_amount != 1 %}s{% endif %}
+            </p>
+        </footer>
+    </body>
+</html>
