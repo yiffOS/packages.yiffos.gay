@@ -1,5 +1,8 @@
 #[macro_use]
 extern crate diesel;
+#[macro_use]
+extern crate log;
+extern crate pretty_env_logger;
 
 use std::env;
 
@@ -19,8 +22,10 @@ pub struct State {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    pretty_env_logger::init();
     dotenv().ok();
-    println!("Starting server with {} workers...", env::var("WORKERS").unwrap_or_else(|_| "1".to_string()).parse::<i32>().unwrap());
+
+    info!("Starting yiffOS Packages server");
 
     let db_pool = database::connect();
 

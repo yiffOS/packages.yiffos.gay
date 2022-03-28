@@ -16,6 +16,8 @@ struct IndexTemplate {
 
 #[get("/")]
 pub async fn index() -> impl Responder {
+    debug!("Calling: index");
+
     let index = IndexTemplate {
         packages: vec![IndexPackageInformation {
             repo: "f".to_string(),
