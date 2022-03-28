@@ -7,7 +7,7 @@ extern crate pretty_env_logger;
 use std::env;
 
 use actix_files as fs;
-use actix_web::{App, HttpServer};
+use actix_web::{App, HttpServer, web};
 use dotenv::dotenv;
 
 use crate::database::DbPool;
@@ -37,7 +37,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             // Database state
-            .app_data(State { db: db_pool.clone() })
+            .app_data(web::Data::new(State { db: db_pool.clone() }))
 
             // Static files
             .service(fs::Files::new("/css", "./templates/css"))
