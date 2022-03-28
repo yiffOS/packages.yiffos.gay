@@ -1,5 +1,5 @@
 document.getElementById('search').addEventListener('keyup', function(e) {
-    if (e.keyCode === 13) {
+    if (e.key === "Enter") {
         window.find(this.value);
     }
 });

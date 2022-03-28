@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>yiffOS Packages - Package not found</title>
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+    <body>
+        <header class="container" style="padding-bottom: 0em;">
+            <nav>
+                <ul>
+                    <li><a href="/"><h1>yiffOS Packages</h1></a></li>
+                </ul>
+              </nav>
+        </header>
+        <main class="container" style="padding-top: 0em; flex: 1;">
+            <div class="grid">
+                <div>
+                    <hgroup>
+                        <h2 style="margin-bottom: 0%;">{{ package_name }} was not found</h2>
+                        <strong>Return home?</strong>
+                    </hgroup>
+                </div>
+                <div>
+                    
+                </div>
+                <div>
+                    <a href="/"><button>Go Home</button></a>
+                </div>
+            </div>
+        </main>
+        <footer class="container">
+            <hr />
+            <p>
+                Hosting 
+                <span>{{ packages_amount }}</span> 
+                package{% if packages_amount != 1 %}s{% endif %}
+                 &mdash; 
+                Packages are updated every 30 minutes.
+            </p>
+        </footer>
+    </body>
+</html>

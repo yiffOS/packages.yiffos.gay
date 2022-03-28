@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>yiffOS Packages - {{ package.name }}</title>
         <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
         <link rel="stylesheet" href="./css/main.css">
@@ -8,7 +9,7 @@
         <header class="container" style="padding-bottom: 0em;">
             <nav>
                 <ul>
-                    <li><h1>yiffOS Packages</h1></li>
+                    <li><a href="/"><h1>yiffOS Packages</h1></a></li>
                 </ul>
               </nav>
         </header>
@@ -100,6 +101,34 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="grid">
+                <div>
+                    <strong>Conflicts</strong>
+                    <ul>
+                        {% for conflict in package.conflicts %}
+                            <li><a href="./{{ conflict }}">{{ conflict }}</a></li>
+                        {% endfor %}
+
+                        {% if package.conflicts.len() == 0 %}
+                            <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div>
+                    <strong>Replaces</strong>
+                    <ul>
+                        {% for replace in package.replaces %}
+                            <li><a href="./{{ replace }}">{{ replace }}</a></li>
+                        {% endfor %}
+
+                        {% if package.replaces.len() == 0 %}
+                            <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
 
             <strong>Provides</strong>
             <ul>
