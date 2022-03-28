@@ -1,5 +1,7 @@
-use actix_web::{get, HttpResponse, Responder};
+use actix_web::{get, HttpResponse, Responder, web};
 use askama_actix::Template;
+use crate::database::packages::return_all_packages;
+use crate::State;
 
 struct IndexPackageInformation {
     repo: String,
@@ -15,22 +17,23 @@ struct IndexTemplate {
 }
 
 #[get("/")]
-pub async fn index() -> impl Responder {
+pub async fn index(state: web::Data<State>) -> impl Responder {
     debug!("Calling: index");
 
+    let packages = return_all_packages(state.db.clone().get().unwrap());
+    let render_packages = packages.iter().map(|p| {
+        IndexPackageInformation {
+            repo: p.repo.clone(),
+            name: p.name.clone(),
+            version: p.version.clone(),
+            description: p.description.clone(),
+        }
+    }).collect();
+
+    debug!("{}" , packages.len());
+
     let index = IndexTemplate {
-        packages: vec![IndexPackageInformation {
-            repo: "f".to_string(),
-            name: "d".to_string(),
-            version: "b".to_string(),
-            description: "w".to_string(),
-        },
-                       IndexPackageInformation {
-                           repo: "f".to_string(),
-                           name: "d".to_string(),
-                           version: "b".to_string(),
-                           description: "w".to_string(),
-                       }]
+        packages: render_packages
     }.render().unwrap();
 
     HttpResponse::Ok().body(index)
