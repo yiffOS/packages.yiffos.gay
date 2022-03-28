@@ -134,12 +134,13 @@
             </div>
         </main>
         <footer class="container">
-            {% let packages_amount = packages.len() %}
             <hr />
             <p>
                 Hosting 
                 <span>{{ packages_amount }}</span> 
                 package{% if packages_amount != 1 %}s{% endif %}
+                 &mdash; 
+                Packages are updated every 30 minutes.
             </p>
         </footer>
     </body>

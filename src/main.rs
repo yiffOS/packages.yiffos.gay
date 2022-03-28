@@ -25,6 +25,11 @@ async fn main() -> std::io::Result<()> {
     pretty_env_logger::init();
     dotenv().ok();
 
+    let workers = env::var("WORKERS").unwrap_or_else(|_| "1".to_string()).parse::<usize>().unwrap();
+
+    let ip = env::var("IP").unwrap_or_else(|_| "0.0.0.0".to_string());
+    let port = env::var("PORT").unwrap_or_else(|_| "3747".to_string()).parse::<u16>().unwrap();
+
     info!("Starting yiffOS Packages server");
 
     let db_pool = database::connect();
@@ -45,8 +50,8 @@ async fn main() -> std::io::Result<()> {
             // Package view
             .service(routes::package_view::package_view)
     })
-        .workers(env::var("WORKERS").unwrap_or_else(|_| "1".to_string()).parse().unwrap())
-        .bind(("0.0.0.0", 6969))?
+        .workers(workers)
+        .bind((ip, port))?
         .run()
         .await
 }
