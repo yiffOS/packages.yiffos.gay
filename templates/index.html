@@ -19,6 +19,7 @@
             <table role="grid">
                 <thead>
                     <tr>
+                        <th scope="col">Repo</th>
                         <th scope="col">Name</th>
                         <th scope="col">Version</th>
                         <th scope="col">Description</th>
@@ -27,6 +28,7 @@
                 <tbody>
                     {% for package in packages %}
                         <tr>
+                            <th scope="row">{{ package.repo }}</th>
                             <th scope="row"><a href="./{{ package.name }}">{{ package.name }}</a></th>
                             <td>{{ package.version }}</td>
                             <td>{{ package.description }}</td>

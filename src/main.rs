@@ -1,53 +1,46 @@
+#[macro_use]
+extern crate diesel;
+
+use std::env;
+
 use actix_files as fs;
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-use askama_actix::{Template, TemplateToResponse};
+use actix_web::{App, HttpServer};
+use dotenv::dotenv;
 
-struct IndexPackageInformation {
-    name: String,
-    version: String,
-    description: String
-}
+use crate::database::DbPool;
 
-#[derive(Template)]
-#[template(path = "index.html")]
-struct IndexTemplate {
-    packages: Vec<IndexPackageInformation>
-}
+mod database;
+mod schema;
+mod routes;
 
-#[get("/")]
-async fn index() -> impl Responder {
-    let mut index = IndexTemplate {
-        packages: vec![IndexPackageInformation {
-            name: "d".to_string(),
-            version: "b".to_string(),
-            description: "w".to_string()
-        },
-                       IndexPackageInformation {
-                           name: "d".to_string(),
-                           version: "b".to_string(),
-                           description: "w".to_string()
-                       }]
-    }.render().unwrap();
-
-    HttpResponse::Ok().body(index)
-}
-
-#[get("/{get_package}")]
-async fn get_package(package_name: web::Path<String>) -> impl Responder {
-    HttpResponse::Ok().body(package_name.into_inner())
+pub struct State {
+    pub db: DbPool,
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
+    dotenv().ok();
+    println!("Starting server with {} workers...", env::var("WORKERS").unwrap_or_else(|_| "1".to_string()).parse::<i32>().unwrap());
+
+    let db_pool = database::connect();
+
+    HttpServer::new(move || {
         App::new()
-            .service(index)
+            // Database state
+            .app_data(State { db: db_pool.clone() })
+
+            // Static files
             .service(fs::Files::new("/css", "./templates/css"))
             .service(fs::Files::new("/js", "./templates/js"))
-            .service(get_package)
 
+            // Index
+            .service(routes::index::index)
+
+            // Package view
+            .service(routes::package_view::package_view)
     })
-        .bind(("127.0.0.1", 6969))?
+        .workers(env::var("WORKERS").unwrap_or_else(|_| "1".to_string()).parse().unwrap())
+        .bind(("0.0.0.0", 6969))?
         .run()
         .await
 }
