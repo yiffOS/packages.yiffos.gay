@@ -37,6 +37,7 @@ async fn main() -> std::io::Result<()> {
             // Static files
             .service(fs::Files::new("/css", "./templates/css"))
             .service(fs::Files::new("/js", "./templates/js"))
+            .service(routes::favicon)
 
             // Index
             .service(routes::index::index)
