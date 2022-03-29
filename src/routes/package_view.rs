@@ -1,6 +1,6 @@
 use actix_web::{get, HttpResponse, Responder, web};
 use askama_actix::Template;
-use crate::database::packages::{Package, return_amount_of_packages, return_single_package};
+use crate::database::packages::{return_amount_of_packages, return_required_by, return_single_package};
 use crate::State;
 
 struct PackageViewInformation{
@@ -56,7 +56,7 @@ pub async fn package_view(state: web::Data<State>, package_name: web::Path<Strin
 
     let package_view = PackageTemplate {
         package: PackageViewInformation {
-            name: package.name,
+            name: package.name.clone(),
             version: package.version,
             epoch: package.epoch.to_string(),
             description: package.description,
@@ -64,7 +64,7 @@ pub async fn package_view(state: web::Data<State>, package_name: web::Path<Strin
             licenses: package.license.unwrap_or(vec![]),
             groups: package.groups.unwrap_or(vec![]),
             dependencies: package.depends.unwrap_or(vec![]),
-            required_by: vec![],
+            required_by: return_required_by(state.db.clone().get().unwrap(), package.name),
             optional_dependencies: package.optional_depends.unwrap_or(vec![]),
             build_dependencies: package.make_depends.unwrap_or(vec![]),
             conflicts: package.conflicts.unwrap_or(vec![]),

@@ -4,12 +4,11 @@ extern crate dotenv;
 pub mod packages;
 
 use diesel::pg::PgConnection;
-use diesel::r2d2::{ConnectionManager, Pool, PooledConnection, PoolError};
+use diesel::r2d2::{ConnectionManager, Pool, PoolError};
 
 use dotenv::dotenv;
 
 pub type DbPool = Pool<ConnectionManager<PgConnection>>;
-pub type DbPooledConnection = PooledConnection<ConnectionManager<PgConnection>>;
 
 fn init_pool(database_url: &str) -> Result<DbPool, PoolError> {
     let manager = ConnectionManager::<PgConnection>::new(database_url);

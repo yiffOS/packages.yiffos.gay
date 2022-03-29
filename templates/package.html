@@ -51,8 +51,8 @@
 
             <div class="grid">
                 <div>
-                    <strong>Dependencies</strong>
-                    <ul>
+                    <strong>Dependencies - {{ package.dependencies.len() }}</strong>
+                    <ul class="readmore">
                         {% for dependency in package.dependencies %}
                             <li><a href="./{{ dependency }}">{{ dependency }}</a></li>
                         {% endfor %}
@@ -63,8 +63,8 @@
                     </ul>
                 </div>
                 <div>
-                    <strong>Required By</strong>
-                    <ul>
+                    <strong>Required By - {{ package.required_by.len() }}</strong>
+                    <ul class="readmore">
                         {% for required_by in package.required_by %}
                             <li><a href="./{{ required_by }}">{{ required_by }}</a></li>
                         {% endfor %}
@@ -77,8 +77,8 @@
             </div>
             <div class="grid">
                 <div>
-                    <strong>Optional Dependencies</strong>
-                    <ul>
+                    <strong>Optional Dependencies - {{ package.optional_dependencies.len() }}</strong>
+                    <ul class="readmore">
                         {% for optional_dependency in package.optional_dependencies %}
                             <li><a href="./{{ optional_dependency }}">{{ optional_dependency }}</a></li>
                         {% endfor %}
@@ -89,8 +89,8 @@
                     </ul>
                 </div>
                 <div>
-                    <strong>Build Dependencies</strong>
-                    <ul>
+                    <strong>Build Dependencies - {{ package.build_dependencies.len() }}</strong>
+                    <ul class="readmore">
                         {% for build_dependency in package.build_dependencies %}
                             <li><a href="./{{ build_dependency }}">{{ build_dependency }}</a></li>
                         {% endfor %}
@@ -105,7 +105,7 @@
             <div class="grid">
                 <div>
                     <strong>Conflicts</strong>
-                    <ul>
+                    <ul class="readmore">
                         {% for conflict in package.conflicts %}
                             <li><a href="./{{ conflict }}">{{ conflict }}</a></li>
                         {% endfor %}
@@ -117,7 +117,7 @@
                 </div>
                 <div>
                     <strong>Replaces</strong>
-                    <ul>
+                    <ul class="readmore">
                         {% for replace in package.replaces %}
                             <li><a href="./{{ replace }}">{{ replace }}</a></li>
                         {% endfor %}
@@ -173,4 +173,6 @@
             </p>
         </footer>
     </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/package.js"></script>
 </html>

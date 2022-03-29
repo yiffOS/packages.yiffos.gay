@@ -1,10 +1,10 @@
 use diesel::prelude::*;
 use diesel::{PgConnection, QueryDsl};
 use diesel::r2d2::{ConnectionManager, PooledConnection};
+use crate::schema::packages;
 
-use crate::database::connect;
-
-#[derive(Queryable, Clone)]
+#[derive(Queryable, QueryableByName, Clone)]
+#[table_name = "packages"]
 pub struct Package {
     pub name: String,
     pub version: String,
@@ -66,4 +66,13 @@ pub fn return_amount_of_packages(connection: PooledConnection<ConnectionManager<
         .expect("Error getting package information");
 
     result.len() as u64
+}
+
+pub fn return_required_by(connection: PooledConnection<ConnectionManager<PgConnection>>, package_name: String) -> Vec<String> {
+    diesel::sql_query(format!(r#"SELECT * FROM packages WHERE '{}' = ANY(depends);"#, package_name))
+        .load::<Package>(&connection)
+        .expect("Error getting package information")
+        .iter()
+        .map(|package|{ package.name.clone() })
+        .collect()
 }
