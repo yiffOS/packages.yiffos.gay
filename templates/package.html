@@ -1,9 +1,26 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>yiffOS Packages - {{ package.name }}</title>
+        <title>{{ package.name }} - yiffOS Packages</title>
         <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
         <link rel="stylesheet" href="./css/main.css">
+
+        <meta name="description" content="{{ package.name }} - Official package directory of yiffOS's repositories.">
+
+        <!-- Facebook Meta Tags -->
+        <meta property="og:url" content="https://packages.yiffos.gay/{{ package.name }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ package.name }} - yiffOS Packages">
+        <meta property="og:description" content="{{ package.name }} - Official package directory of yiffOS's repositories.">
+        <meta property="og:image" content="https://gitlab.com/yiffos/misc/branding/-/raw/main/yiffOSBanner-dark.png">
+
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:domain" content="packages.yiffos.gay">
+        <meta property="twitter:url" content="https://packages.yiffos.gay/{{ package.name }}">
+        <meta name="twitter:title" content="{{ package.name }} - yiffOS Packages">
+        <meta name="twitter:description" content="{{ package.name }} - Official package directory of yiffOS's repositories.">
+        <meta name="twitter:image" content="https://gitlab.com/yiffos/misc/branding/-/raw/main/yiffOSBanner-dark.png">
     </head>
     <body>
         <header class="container" style="padding-bottom: 0em;">
@@ -54,7 +71,7 @@
                     <strong>Dependencies - {{ package.dependencies.len() }}</strong>
                     <ul class="readmore">
                         {% for dependency in package.dependencies %}
-                            <li><a href="./{{ dependency }}">{{ dependency }}</a></li>
+                            <li><a href="/{{ dependency }}">{{ dependency }}</a></li>
                         {% endfor %}
 
                         {% if package.dependencies.len() == 0 %}
@@ -66,7 +83,7 @@
                     <strong>Required By - {{ package.required_by.len() }}</strong>
                     <ul class="readmore">
                         {% for required_by in package.required_by %}
-                            <li><a href="./{{ required_by }}">{{ required_by }}</a></li>
+                            <li><a href="/{{ required_by }}">{{ required_by }}</a></li>
                         {% endfor %}
 
                         {% if package.required_by.len() == 0 %}
@@ -80,7 +97,7 @@
                     <strong>Optional Dependencies - {{ package.optional_dependencies.len() }}</strong>
                     <ul class="readmore">
                         {% for optional_dependency in package.optional_dependencies %}
-                            <li><a href="./{{ optional_dependency }}">{{ optional_dependency }}</a></li>
+                            <li><a href="/{{ optional_dependency }}">{{ optional_dependency }}</a></li>
                         {% endfor %}
 
                         {% if package.optional_dependencies.len() == 0 %}
@@ -92,7 +109,7 @@
                     <strong>Build Dependencies - {{ package.build_dependencies.len() }}</strong>
                     <ul class="readmore">
                         {% for build_dependency in package.build_dependencies %}
-                            <li><a href="./{{ build_dependency }}">{{ build_dependency }}</a></li>
+                            <li><a href="/{{ build_dependency }}">{{ build_dependency }}</a></li>
                         {% endfor %}
 
                         {% if package.build_dependencies.len() == 0 %}
@@ -107,7 +124,7 @@
                     <strong>Conflicts</strong>
                     <ul class="readmore">
                         {% for conflict in package.conflicts %}
-                            <li><a href="./{{ conflict }}">{{ conflict }}</a></li>
+                            <li><a href="/{{ conflict }}">{{ conflict }}</a></li>
                         {% endfor %}
 
                         {% if package.conflicts.len() == 0 %}
@@ -119,7 +136,7 @@
                     <strong>Replaces</strong>
                     <ul class="readmore">
                         {% for replace in package.replaces %}
-                            <li><a href="./{{ replace }}">{{ replace }}</a></li>
+                            <li><a href="/{{ replace }}">{{ replace }}</a></li>
                         {% endfor %}
 
                         {% if package.replaces.len() == 0 %}
